@@ -116,15 +116,40 @@ export const PostLink = () => {
           width: "calc(100% - 224px)",
         }}
       >
-        <div>{data?.title}</div>
+        <div
+          style={{
+            fontWeight: 500,
+            fontSize: 18,
+            lineHeight: "22px",
+          }}
+        >
+          {data?.title}
+        </div>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
+            height: 24,
           }}
         >
-          <div>{data?.user?.fullName}</div>
-          <div>{createTime}</div>
+          <div
+            style={{
+              fontSize: 12,
+              color: "#1a1a1a",
+              lineHeight: "16px",
+            }}
+          >
+            {data?.user?.fullName}
+          </div>
+          <div
+            style={{
+              fontSize: 12,
+              color: "#5c5c5c",
+              lineHeight: "16px",
+            }}
+          >
+            {data?.createdAt ? createTime : ""}
+          </div>
         </div>
       </div>
     </div>

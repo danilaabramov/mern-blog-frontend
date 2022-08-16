@@ -182,21 +182,27 @@ $blue: #4361ee;
     }
   }
 
-  //a {
-  //  height: 180px;
-  //  width: 100%;
-  //  max-width: 744px;
-  //  display: block;
-  //  position: absolute;
-  //  opacity: 0.1;
-  //  background: #00bb00;
-  //
-  //  &:hover {
-  //    iframe {
-  //      transform: scale(1.02);
-  //    }
-  //  }
-  //}
+  span {
+    iframe {
+      height: 180px;
+      margin-bottom: 0;
+      border-radius: 10px;
+      border: 1px solid #f3f3f3;
+      overflow: hidden;
+    }
+    a {
+      max-width: 744px;
+      width: 100%;
+      margin: 0 auto 0;
+      height: 180px;
+      position: absolute;
+      border-radius: 10px;
+    }
+
+    a:hover {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+  }
 
   table {
     max-width: 744px;

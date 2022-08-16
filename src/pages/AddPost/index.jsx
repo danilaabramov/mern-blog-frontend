@@ -95,7 +95,15 @@ export const AddPost = () => {
           alert("Ошибка при получении статьи!");
         });
     }
-  }, []);
+
+    if (!isEditing) {
+      setTitle("");
+      setTitle2("");
+      setText("");
+      setImageUrl("");
+      setTags("");
+    }
+  }, [isEditing]);
 
   const options = useMemo(
     () => ({
@@ -121,33 +129,46 @@ export const AddPost = () => {
 
   if ((userId && data?._id) || !isEditing) {
     return (
-      <Paper style={{ padding: 30 }}>
-        <Button variant="outlined" size="large" style={{ overflow: "hidden" }}>
-          Загрузить превью
-          <input
-            type="file"
-            onChange={handleChangeFile}
+      <Paper style={{ paddingBottom: 20, paddingTop: 20 }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Button
+            variant="outlined"
+            size="large"
             style={{
-              right: 102,
-              transform: "scale(2)",
-              opacity: 0,
-              position: "absolute",
-              cursor: "pointer",
-              width: 206,
+              overflow: "hidden",
+              display: "block",
+              height: 36,
+              lineHeight: "16px",
+              fontSize: 14,
+              padding: "2px 5px",
             }}
+          >
+            Загрузить превью
+            <input
+              type="file"
+              onChange={handleChangeFile}
+              style={{
+                top: 6,
+                right: 102,
+                transform: "scale(2)",
+                opacity: 0,
+                position: "absolute",
+                cursor: "pointer",
+                width: 206,
+              }}
+            />
+          </Button>
+          <TextField
+            classes={{ root: styles.title }}
+            style={{ paddingRight: 20, paddingLeft: 20 }}
+            variant="standard"
+            placeholder="Ссылка на превью..."
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+            fullWidth
           />
-        </Button>
-        <TextField
-          classes={{ root: styles.title }}
-          variant="standard"
-          placeholder="Ссылка на превью..."
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-          fullWidth
-        />
 
-        {imageUrl && (
-          <>
+          {imageUrl && (
             <Button
               variant="contained"
               color="error"
@@ -155,9 +176,13 @@ export const AddPost = () => {
             >
               Удалить
             </Button>
-            <img className={styles.image} src={imageUrl} alt="Uploaded" />
-          </>
+          )}
+        </div>
+
+        {imageUrl && (
+          <img className={styles.image} src={imageUrl} alt="Uploaded" />
         )}
+
         <br />
         <br />
         <TextField
@@ -176,14 +201,14 @@ export const AddPost = () => {
           onChange={(e) => setTitle2(e.target.value)}
           fullWidth
         />
-        <TextField
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-          classes={{ root: styles.tags }}
-          variant="standard"
-          placeholder="Тэги"
-          fullWidth
-        />
+        {/*<TextField*/}
+        {/*  value={tags}*/}
+        {/*  onChange={(e) => setTags(e.target.value)}*/}
+        {/*  classes={{ root: styles.tags }}*/}
+        {/*  variant="standard"*/}
+        {/*  placeholder="Тэги"*/}
+        {/*  fullWidth*/}
+        {/*/>*/}
         <SimpleMDE
           className={styles.editor}
           value={text}
