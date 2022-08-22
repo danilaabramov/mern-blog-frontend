@@ -1,12 +1,12 @@
 $blue: #4361ee;
 
 .root {
-  overflow: hidden;
   position: relative;
-  display: flex;
   width: 100%;
-  transform: scale(1);
   border-radius: 10px;
+  //display: flex;
+
+  //box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
   &:hover {
     .editButtons {
@@ -18,6 +18,11 @@ $blue: #4361ee;
       transform: scale(1.02);
       filter: contrast(80%) brightness(110%);
     }
+
+    //.imageBGHover {
+    //  transition: all 0.3s ease-in-out;
+    //  opacity: 1;
+    //}
   }
 
   @media (min-width: 900px) {
@@ -29,10 +34,12 @@ $blue: #4361ee;
 
     &First {
       width: 100%;
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
     }
   }
 
   &Full {
+    box-shadow: none;
     max-width: 1160px;
     width: 100%;
     display: block;
@@ -94,6 +101,21 @@ $blue: #4361ee;
     height: 640px;
     margin-bottom: 56px;
   }
+}
+
+.imageBGHover {
+  position: absolute;
+  transform: scale(1);
+  //transform: scale(1.01);
+  top: 5%;
+  background-size: auto;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  border-radius: inherit;
+  -webkit-filter: blur(25px);
+  filter: blur(25px);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
 }
 
 .rootGradient {
@@ -446,12 +468,10 @@ $blue: #4361ee;
 }
 
 .skeleton {
-  //background-color: #fff;
-  //border: 1px solid #dedede;
   border-radius: 6px;
   overflow: hidden;
   margin-bottom: 15px;
-  width: 1160px;
+  width: 100%;
 
   &Content {
     padding: 20px 0;
@@ -467,11 +487,6 @@ $blue: #4361ee;
 
 .skeletonUser {
   display: flex;
-
-  //&Details {
-  //  display: flex;
-  //  flex-direction: column;
-  //}
 }
 
 .skeletonTags {

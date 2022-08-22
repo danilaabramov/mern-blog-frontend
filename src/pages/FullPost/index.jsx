@@ -119,9 +119,7 @@ export const FullPost = () => {
         tags={data ? data.tags : location.state.tags}
         isFullPost
         isEditable={
-          data
-            ? userData?._id === data.user._id
-            : userData?._id === location.state.user._id
+          data ? userData?._id === data.user._id : location.state.isEditable
         }
       >
         <ReactMarkdown
@@ -138,14 +136,18 @@ export const FullPost = () => {
           borderRadius: 10,
         }}
       >
-        {dataPrev?.length === 1 ? (
+        {dataPrev?.length === 1 && userData ? (
           <div
             onClick={() => {
               setData(null);
               setDataNext(null);
               setDataPrev(null);
               navigate(`/posts/${dataPrev[0]._id}`, {
-                state: dataPrev[0],
+                state: {
+                  ...dataPrev[0],
+                  isEditable: dataPrev[0].user._id === userData._id,
+                  viewsCount: dataPrev[0].viewsCount + 1,
+                },
               });
             }}
             style={{
@@ -161,14 +163,18 @@ export const FullPost = () => {
           <div style={{ marginLeft: "50%" }} />
         )}
 
-        {dataNext?.length === 1 && (
+        {dataNext?.length === 1 && userData && (
           <div
             onClick={() => {
               setData(null);
               setDataNext(null);
               setDataPrev(null);
               navigate(`/posts/${dataNext[0]._id}`, {
-                state: dataNext[0],
+                state: {
+                  ...dataNext[0],
+                  isEditable: dataNext[0].user._id === userData._id,
+                  viewsCount: dataNext[0].viewsCount + 1,
+                },
               });
             }}
             style={{

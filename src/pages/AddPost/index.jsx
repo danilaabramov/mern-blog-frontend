@@ -129,7 +129,7 @@ export const AddPost = () => {
 
   if ((userId && data?._id) || !isEditing) {
     return (
-      <Paper style={{ paddingBottom: 20, paddingTop: 20 }}>
+      <Paper style={{ paddingBottom: 20, paddingTop: 20, width: "100%" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <Button
             variant="outlined"

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
@@ -49,7 +49,7 @@ export const Post = ({
     );
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const monthNames = [
       "января",
       "февраля",
@@ -123,162 +123,188 @@ export const Post = ({
         [styles.root3]: index % 5 === 0 || index % 5 === 3 || index % 5 === 4,
       })}
     >
-      {isEditable && isFullPost && (
-        <div className={styles.editButtons}>
-          <Link to={`/posts/${id}/edit`}>
-            <IconButton color="primary">
-              <EditIcon />
-            </IconButton>
-          </Link>
-          <Link to="/">
-            <IconButton onClick={onClickRemove} color="secondary">
-              <DeleteIcon />
-            </IconButton>
-          </Link>
-        </div>
-      )}
-
-      {isFullPost && (
-        <div style={{ width: "100%", maxWidth: 744, margin: "auto" }}>
-          <div style={{ display: "flex" }}>
-            <div style={{ marginRight: 20, marginTop: 15 }}>
-              <UserInfo {...user} />
-            </div>
-            <ul className={styles.postDetails}>
-              <li>
-                <ClockIcon />
-                <span>{createTime}</span>
-              </li>
-              <li>
-                <EyeIcon />
-                <span>{viewsCount}</span>
-              </li>
-              <li>
-                <CommentIcon />
-                <span>{commentsCount}</span>
-              </li>
-            </ul>
-          </div>
-
-          <h2 className={styles.titleFull}>{title}</h2>
-
-          <div className={styles.tags}>
-            <h2 className={styles.title2Full}>{title2}</h2>
-          </div>
-
-          {/*{tags.length !== 0 && (*/}
-          {/*  <ul className={styles.tags}>*/}
-          {/*    {tags.map((name) => (*/}
-          {/*      <li key={name}>*/}
-          {/*        <Link to={`/tags/${name}`}>*/}
-          {/*          <div className={styles.title2Full}>#{name}</div>*/}
-          {/*        </Link>*/}
-          {/*      </li>*/}
-          {/*    ))}*/}
-          {/*  </ul>*/}
-          {/*)}*/}
-        </div>
+      {!isFullPost && (
+        <div
+          className={clsx(styles.imageBGHover, styles.image, {
+            [styles.imageFirstBGHover]: index === 0,
+            [styles.imageFirst]: index === 0,
+            [styles.image3BGHover]:
+              index % 5 === 0 || index % 5 === 3 || index % 5 === 4,
+            [styles.image3]:
+              index % 5 === 0 || index % 5 === 3 || index % 5 === 4,
+          })}
+          style={{ backgroundImage: `url(${imageUrl})` }}
+        ></div>
       )}
 
       <div
+        className={styles.root2}
         style={{
-          cursor: isFullPost ? null : "pointer",
+          transform: "scale(1)",
+          borderRadius: 10,
+          overflow: "hidden",
           width: "100%",
+          position: "relative",
+          userSelect: isFullPost ? "" : "none",
         }}
-        onClick={() =>
-          isFullPost
-            ? {}
-            : navigate(`/posts/${id}`, {
-                state: {
-                  id,
-                  title,
-                  title2,
-                  createdAt,
-                  imageUrl,
-                  user,
-                  viewsCount,
-                  commentsCount,
-                  tags,
-                  isEditable,
-                  text,
-                  comments,
-                },
-              })
-        }
       >
-        {(imageUrl || !isFullPost) && (
-          <div
-            className={clsx(styles.imageBorder, {
-              [styles.imageFullBorder]: isFullPost,
-              [styles.imageBorderFirst]: index === 0,
-              [styles.imageBorder3]:
-                index % 5 === 0 || index % 5 === 3 || index % 5 === 4,
-            })}
-            style={{
-              cursor: isFullPost ? null : "pointer",
-              width: "100%",
-            }}
-          >
-            {imageUrl && (
-              <div
-                className={clsx(styles.image, {
-                  [styles.imageFull]: isFullPost,
-                  [styles.imageHover]: !isFullPost,
-                  [styles.imageFirst]: index === 0,
-                  [styles.image3]:
-                    index % 5 === 0 || index % 5 === 3 || index % 5 === 4,
-                })}
-                style={{ backgroundImage: `url(${imageUrl})` }}
-              />
-            )}
+        {isEditable && isFullPost && (
+          <div className={styles.editButtons}>
+            <Link to={`/posts/${id}/edit`}>
+              <IconButton color="primary">
+                <EditIcon />
+              </IconButton>
+            </Link>
+            <Link to="/">
+              <IconButton onClick={onClickRemove} color="secondary">
+                <DeleteIcon />
+              </IconButton>
+            </Link>
+          </div>
+        )}
+
+        {isFullPost && (
+          <div style={{ width: "100%", maxWidth: 744, margin: "auto" }}>
+            <div style={{ display: "flex" }}>
+              <div style={{ marginRight: 20, marginTop: 15 }}>
+                <UserInfo {...user} />
+              </div>
+              <ul className={styles.postDetails}>
+                <li>
+                  <ClockIcon />
+                  <span>{createTime}</span>
+                </li>
+                <li>
+                  <EyeIcon />
+                  <span>{viewsCount}</span>
+                </li>
+                <li>
+                  <CommentIcon />
+                  <span>{commentsCount}</span>
+                </li>
+              </ul>
+            </div>
+
+            <h2 className={styles.titleFull}>{title}</h2>
+
+            <div className={styles.tags}>
+              <h2 className={styles.title2Full}>{title2}</h2>
+            </div>
+
+            {/*{tags.length !== 0 && (*/}
+            {/*  <ul className={styles.tags}>*/}
+            {/*    {tags.map((name) => (*/}
+            {/*      <li key={name}>*/}
+            {/*        <Link to={`/tags/${name}`}>*/}
+            {/*          <div className={styles.title2Full}>#{name}</div>*/}
+            {/*        </Link>*/}
+            {/*      </li>*/}
+            {/*    ))}*/}
+            {/*  </ul>*/}
+            {/*)}*/}
           </div>
         )}
 
         <div
-          className={clsx({
-            [styles.rootGradient]: !isFullPost,
-            [styles.rootGradientFirst]: index === 0,
-            [styles.rootGradient3]:
-              index % 5 === 0 || index % 5 === 3 || index % 5 === 4,
-          })}
-        />
-
-        <div
-          className={clsx(styles.indention, {
-            [styles.indentionFull]: isFullPost,
-            [styles.indentionFirst]: index === 0,
-          })}
-          style={
-            !isFullPost
-              ? {
-                  position: "absolute",
-                  bottom: 0,
-                  color: "white",
-                }
-              : null
+          style={{
+            cursor: isFullPost ? null : "pointer",
+            width: "100%",
+          }}
+          onClick={() =>
+            isFullPost
+              ? {}
+              : navigate(`/posts/${id}`, {
+                  state: {
+                    id,
+                    title,
+                    title2,
+                    createdAt,
+                    imageUrl,
+                    user,
+                    viewsCount,
+                    commentsCount,
+                    tags,
+                    isEditable,
+                    text,
+                    comments,
+                  },
+                })
           }
         >
-          {!isFullPost && (
-            <>
-              <h2
-                className={styles.title}
-                style={{ fontSize: 13, marginBottom: 8 }}
-              >
-                {createTime}
-              </h2>
-              <h1
-                className={clsx(styles.title, {
-                  [styles.titleFirst]: index === 0,
-                })}
-              >
-                {title}
-              </h1>
-            </>
+          {(imageUrl || !isFullPost) && (
+            <div
+              className={clsx(styles.imageBorder, {
+                [styles.imageFullBorder]: isFullPost,
+                [styles.imageBorderFirst]: index === 0,
+                [styles.imageBorder3]:
+                  index % 5 === 0 || index % 5 === 3 || index % 5 === 4,
+              })}
+              style={{
+                cursor: isFullPost ? null : "pointer",
+                width: "100%",
+              }}
+            >
+              {imageUrl && (
+                <div
+                  className={clsx(styles.image, {
+                    [styles.imageFull]: isFullPost,
+                    [styles.imageHover]: !isFullPost,
+                    [styles.imageFirst]: index === 0,
+                    [styles.image3]:
+                      index % 5 === 0 || index % 5 === 3 || index % 5 === 4,
+                  })}
+                  style={{ backgroundImage: `url(${imageUrl})` }}
+                />
+              )}
+            </div>
           )}
 
-          {isFullPost && children && (
-            <div className={styles.content}>{children}</div>
-          )}
+          <div
+            className={clsx({
+              [styles.rootGradient]: !isFullPost,
+              [styles.rootGradientFirst]: index === 0,
+              [styles.rootGradient3]:
+                index % 5 === 0 || index % 5 === 3 || index % 5 === 4,
+            })}
+          />
+
+          <div
+            className={clsx(styles.indention, {
+              [styles.indentionFull]: isFullPost,
+              [styles.indentionFirst]: index === 0,
+            })}
+            style={
+              !isFullPost
+                ? {
+                    position: "absolute",
+                    bottom: 0,
+                    color: "white",
+                  }
+                : null
+            }
+          >
+            {!isFullPost && (
+              <>
+                <h2
+                  className={styles.title}
+                  style={{ fontSize: 13, marginBottom: 8 }}
+                >
+                  {createTime}
+                </h2>
+                <h1
+                  className={clsx(styles.title, {
+                    [styles.titleFirst]: index === 0,
+                  })}
+                >
+                  {title}
+                </h1>
+              </>
+            )}
+
+            {isFullPost && children && (
+              <div className={styles.content}>{children}</div>
+            )}
+          </div>
         </div>
       </div>
     </div>

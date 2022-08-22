@@ -3,10 +3,12 @@ body {
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: white;
 }
 
 * {
   letter-spacing: -0.2px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
