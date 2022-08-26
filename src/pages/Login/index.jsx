@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
@@ -10,7 +10,11 @@ import { useForm } from "react-hook-form";
 import styles from "./Login.module.scss";
 import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
 
+import { Context } from "../Chat/functions/context";
+
 export const Login = () => {
+  const { setUser } = useContext(Context);
+
   const isAuth = useSelector(selectIsAuth);
   const dispath = useDispatch();
   const {
@@ -35,6 +39,17 @@ export const Login = () => {
     if ("token" in data.payload) {
       window.localStorage.setItem("token", data.payload.token);
     }
+
+    setUser({
+      first_name: data.payload.username,
+      last_name: "",
+      email: data.payload.email,
+      username: data.payload.email,
+      secret: data.payload.password,
+      avatar: data.payload.imageUrl,
+      custom_json: {},
+      is_online: true,
+    });
   };
 
   if (isAuth) {

@@ -26,12 +26,31 @@ export const AddPost = () => {
   const isEditing = Boolean(id);
   const dispatch = useDispatch();
 
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+    setImageUrl(base64);
+  };
+
   const handleChangeFile = async (event) => {
     try {
       const formData = new FormData();
       const file = event.target.files[0];
       formData.append("image", file);
       const { data } = await axios.post("/upload", formData);
+
       setImageUrl(
         process.env.REACT_APP_API_URL
           ? process.env.REACT_APP_API_URL + data.url
@@ -146,7 +165,7 @@ export const AddPost = () => {
             Загрузить превью
             <input
               type="file"
-              onChange={handleChangeFile}
+              onChange={(e) => handleFileUpload(e)} //handleChangeFile}
               style={{
                 top: 6,
                 right: 102,

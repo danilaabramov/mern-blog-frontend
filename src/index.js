@@ -10,10 +10,13 @@ import { ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
 import store from "./redux/store";
 
+import "./pages/Chat/assets/VisbyRoundCF-Regular.woff";
+import { ContextProvider } from "./pages/Chat/functions/context";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <>
+  <ContextProvider>
     <CssBaseline />
     <ThemeProvider theme={theme}>
       <BrowserRouter>
@@ -22,5 +25,5 @@ root.render(
         </Provider>
       </BrowserRouter>
     </ThemeProvider>
-  </>
+  </ContextProvider>
 );

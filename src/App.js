@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.scss";
@@ -15,13 +15,24 @@ import {
 } from "./pages";
 import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
 
+import { Context } from "./pages/Chat/functions/context";
+
+import AuthPage from "./pages/Chat/AuthPage";
+import ChatsPage from "./pages/Chat/ChatsPage";
+
 function App() {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
+  const { user } = useContext(Context);
 
   useEffect(() => {
     if (!isAuth) dispatch(fetchAuthMe());
   }, [dispatch, isAuth]);
+
+  useEffect(() => {
+    console.log(user);
+  });
+
   return (
     <div>
       <Routes>
@@ -47,6 +58,12 @@ function App() {
             </div>
           }
         />
+
+        <Route
+          path="/chat"
+          element={<div>{user ? <ChatsPage /> : <Login />}</div>}
+        />
+
         <Route
           path="/gallery"
           element={

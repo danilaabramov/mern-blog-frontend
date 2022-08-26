@@ -245,7 +245,7 @@ export const Post = ({
               }}
             >
               {imageUrl && (
-                <div
+                <img
                   className={clsx(styles.image, {
                     [styles.imageFull]: isFullPost,
                     [styles.imageHover]: !isFullPost,
@@ -253,7 +253,9 @@ export const Post = ({
                     [styles.image3]:
                       index % 5 === 0 || index % 5 === 3 || index % 5 === 4,
                   })}
-                  style={{ backgroundImage: `url(${imageUrl})` }}
+                  src={imageUrl}
+                  alt=""
+                  //style={{ backgroundImage: `url(${imageUrl})` }}
                 />
               )}
             </div>
